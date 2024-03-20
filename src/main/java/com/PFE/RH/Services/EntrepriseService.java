@@ -1,8 +1,10 @@
 package com.PFE.RH.Services;
 
 import com.PFE.RH.DTO.EntrepriseDTO;
+import com.PFE.RH.DTO.EntrepriseWithoutContactsDTO;
 import com.PFE.RH.Entities.Entreprise;
 import com.PFE.RH.Mappers.EntrepriseMapper;
+import com.PFE.RH.Mappers.EntrepriseWithoutContactsMapper;
 import com.PFE.RH.Repositories.EntrepriseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,17 +18,19 @@ public class EntrepriseService {
 
     private final EntrepriseRepository entrepriseRepository;
     private final EntrepriseMapper entrepriseMapper;
+    private final EntrepriseWithoutContactsMapper entrepriseWithoutContactsMapper;
 
     @Autowired
-    public EntrepriseService(EntrepriseRepository entrepriseRepository, EntrepriseMapper entrepriseMapper) {
+    public EntrepriseService(EntrepriseRepository entrepriseRepository, EntrepriseMapper entrepriseMapper, EntrepriseWithoutContactsMapper entrepriseWithoutContactsMapper) {
         this.entrepriseRepository = entrepriseRepository;
         this.entrepriseMapper = entrepriseMapper;
+        this.entrepriseWithoutContactsMapper = entrepriseWithoutContactsMapper;
     }
 
-    public List<EntrepriseDTO> getAllEntreprises() {
+    public List<EntrepriseWithoutContactsDTO> getAllEntreprises() {
         List<Entreprise> entreprises = entrepriseRepository.findAll();
         return entreprises.stream()
-                .map(entrepriseMapper::entrepriseToEntrepriseDTO)
+                .map(entrepriseWithoutContactsMapper::entrepriseToEntrepriseWithoutContactsDTO)
                 .collect(Collectors.toList());
     }
 

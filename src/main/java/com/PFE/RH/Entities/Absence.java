@@ -3,7 +3,7 @@ package com.PFE.RH.Entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 @Entity
 @Data
@@ -17,10 +17,10 @@ public class Absence {
     @JoinColumn(name = "contact_id")
     private Contact contact;
 
-    private LocalDate dateOfAbsence;
+    private Date dateDebutAbsence;
+    private Date dateFinAbsence;
     private String reason;
 
     // Getters and setters
     // Omitted for brevity
 }
-

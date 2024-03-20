@@ -12,5 +12,5 @@ public interface AbsenceRepository extends JpaRepository<Absence, Long> {
 
     List<Absence> findByContactContactId(Long contactId);
 
-    List<Absence> findByDateOfAbsenceBetween(LocalDate startDate, LocalDate endDate);
+
 }

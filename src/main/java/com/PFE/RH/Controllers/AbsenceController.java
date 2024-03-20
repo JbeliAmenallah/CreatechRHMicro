@@ -32,14 +32,6 @@ public class AbsenceController {
         return absenceService.getAbsencesByContactId(contactId);
     }
 
-    @GetMapping("/month")
-    public List<AbsenceDTO> getAbsencesByMonth(
-            @RequestParam("year") int year,
-            @RequestParam("month") int month
-    ) {
-        return absenceService.getAbsencesByMonth(year, month);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<AbsenceDTO> updateAbsence(
             @PathVariable Long id,

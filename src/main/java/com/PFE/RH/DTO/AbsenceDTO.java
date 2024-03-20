@@ -9,7 +9,8 @@ import java.time.LocalDate;
 public class AbsenceDTO {
     private Long absenceId;
     private Long contactId;
-    private LocalDate dateOfAbsence;
+    private LocalDate dateDebutAbsence;
+    private LocalDate dateFinAbsence;
     private String reason;
     @JsonIgnore
     private String message; // Add this field for messages to use on feedbacks
@@ -19,6 +20,6 @@ public class AbsenceDTO {
 
     // Method to generate the message
     public String generateMessage(String contactName) {
-        return contactName + " was absent on " + dateOfAbsence + " due to " + reason + ".";
+        return contactName + " was absent from " + dateDebutAbsence + " to " + dateFinAbsence + " due to " + reason + ".";
     }
 }

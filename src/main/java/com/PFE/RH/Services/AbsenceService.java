@@ -7,6 +7,7 @@ import com.PFE.RH.Repositories.AbsenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -46,28 +47,13 @@ public class AbsenceService {
                 .collect(Collectors.toList());
     }
 
-    public List<AbsenceDTO> getAbsencesByMonth(int year, int month) {
-        LocalDate startDate = LocalDate.of(year, month, 1);
-        LocalDate endDate = startDate.plusMonths(1).minusDays(1);
-        List<Absence> absences = absenceRepository.findByDateOfAbsenceBetween(startDate, endDate);
-
-        if (absences.isEmpty()) {
-            String message = "No absences found for the specified year and month.";
-            AbsenceDTO absenceDTO = new AbsenceDTO();
-            absenceDTO.setMessage(message);
-            return Collections.singletonList(absenceDTO);
-        }
-
-        return absences.stream()
-                .map(absenceMapper::absenceToAbsenceDTO)
-                .collect(Collectors.toList());
-    }
 
     public AbsenceDTO updateAbsence(Long id, AbsenceDTO updatedAbsenceDTO) {
         Optional<Absence> optionalAbsence = absenceRepository.findById(id);
         if (optionalAbsence.isPresent()) {
             Absence existingAbsence = optionalAbsence.get();
-            existingAbsence.setDateOfAbsence(updatedAbsenceDTO.getDateOfAbsence());
+            existingAbsence.setDateDebutAbsence(Date.valueOf(updatedAbsenceDTO.getDateDebutAbsence()));
+            existingAbsence.setDateFinAbsence(Date.valueOf(updatedAbsenceDTO.getDateFinAbsence()));
             existingAbsence.setReason(updatedAbsenceDTO.getReason());
 
             // Save the updated absence

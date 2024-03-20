@@ -1,6 +1,7 @@
 package com.PFE.RH.Controllers;
 
 import com.PFE.RH.DTO.EntrepriseDTO;
+import com.PFE.RH.DTO.EntrepriseWithoutContactsDTO;
 import com.PFE.RH.Services.EntrepriseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,8 +22,8 @@ public class EntrepriseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EntrepriseDTO>> getAllEntreprises() {
-        List<EntrepriseDTO> entreprises = entrepriseService.getAllEntreprises();
+    public ResponseEntity<List<EntrepriseWithoutContactsDTO>> getAllEntreprises() {
+        List<EntrepriseWithoutContactsDTO> entreprises = entrepriseService.getAllEntreprises();
         return new ResponseEntity<>(entreprises, HttpStatus.OK);
     }
 

@@ -3,8 +3,14 @@ package com.PFE.RH.Controllers;
 import com.PFE.RH.DTO.AutorisationDTO;
 import com.PFE.RH.Services.AutorisationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 import java.util.List;
 
 @RestController
@@ -15,25 +21,29 @@ public class AutorisationController {
     private AutorisationService autorisationService;
 
     @GetMapping
-    public List<AutorisationDTO> getAllAutorisations() {
-        return autorisationService.getAllAutorisations();
+    public ResponseEntity<List<AutorisationDTO>> getAllAutorisations() {
+        List<AutorisationDTO> autorisations = autorisationService.getAllAutorisations();
+        return new ResponseEntity<>(autorisations, HttpStatus.OK);
     }
 
     @PostMapping
-    public AutorisationDTO addAutorisation(@RequestBody AutorisationDTO autorisationDTO) {
-        return autorisationService.saveAutorisation(autorisationDTO);
+    public ResponseEntity<AutorisationDTO> addAutorisation(@Valid @RequestBody AutorisationDTO autorisationDTO) {
+        AutorisationDTO createdAutorisation = autorisationService.saveAutorisation(autorisationDTO);
+        return new ResponseEntity<>(createdAutorisation, HttpStatus.CREATED);
     }
 
     @PutMapping("/{autorisationId}")
-    public AutorisationDTO updateAutorisation(
+    public ResponseEntity<AutorisationDTO> updateAutorisation(
             @PathVariable Long autorisationId,
-            @RequestBody AutorisationDTO autorisationDTO
+            @Valid @RequestBody AutorisationDTO autorisationDTO
     ) {
-        return autorisationService.updateAutorisation(autorisationId, autorisationDTO);
+        AutorisationDTO updatedAutorisation = autorisationService.updateAutorisation(autorisationId, autorisationDTO);
+        return new ResponseEntity<>(updatedAutorisation, HttpStatus.OK);
     }
 
     @DeleteMapping("/{autorisationId}")
-    public void deleteAutorisation(@PathVariable Long autorisationId) {
+    public ResponseEntity<String> deleteAutorisation(@PathVariable Long autorisationId) {
         autorisationService.deleteAutorisation(autorisationId);
+        return new ResponseEntity<>("Autorisation with ID " + autorisationId + " deleted successfully.", HttpStatus.OK);
     }
 }

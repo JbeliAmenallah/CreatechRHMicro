@@ -9,7 +9,8 @@ import java.time.LocalDate;
 @Data
 public class AbsenceWithHiddenContactIdDTO {
     private Long absenceId;
-    private LocalDate dateOfAbsence;
+    private LocalDate dateDebutAbsence;
+    private LocalDate dateFinAbsence;
     private String reason;
 
     // Getters and setters

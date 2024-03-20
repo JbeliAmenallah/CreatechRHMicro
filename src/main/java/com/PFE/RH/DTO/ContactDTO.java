@@ -12,12 +12,12 @@ public class ContactDTO {
     private String email;
     private String location;
     private String phone;
-    private List<AbsenceDTO> absences;
-    private List<PrimeDTO> primes;
-    private List<AutorisationDTO> autorisations;
-    private List<CongeDTO> conges;
-    private List<CotisationDTO> cotisations;
-    private EntrepriseDTO entreprise; // Include entreprise mapping
+    private List<AbsenceWithHiddenContactIdDTO> absences;
+    private List<PrimeWithoutTypeAndContactDTO> primes;
+    private List<AutorisationWithoutContactDTO> autorisations;
+    private List<CongeWithHiddenContactIdDTO> conges;
+    private List<CotisationWithHiddenContactIdDTO> cotisations;
+    private EntrepriseWithoutContactsDTO entreprise;
 
     // Getters and setters
     // Omitted for brevity

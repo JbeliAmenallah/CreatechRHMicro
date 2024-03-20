@@ -3,6 +3,7 @@ package com.PFE.RH.Entities;
 import lombok.Data;
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -12,7 +13,8 @@ public class Autorisation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long autorisationId;
 
-    private LocalDate date;
+    private LocalDateTime dateDebut;
+    private LocalDateTime dateFin; // New attribute
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contact_id")
