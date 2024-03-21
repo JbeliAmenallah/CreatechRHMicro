@@ -65,4 +65,20 @@ public class AnneeService {
                 .orElseThrow(() -> new RuntimeException("Annee not found with id: " + id));
         return anneeWithoutJourFerieMapper.toAnneeWithoutJourFerieDTO(annee);
     }
+    public AnneeWithoutJourFerieDTO patchAnnee(Long id, AnneeDTO updatedAnneeDTO) {
+        Optional<Annee> optionalAnnee = anneeRepository.findById(id);
+        if (optionalAnnee.isPresent()) {
+            Annee annee = optionalAnnee.get();
+            if (updatedAnneeDTO.getDateDebutExercice() != null) {
+                annee.setDateDebutExercice(updatedAnneeDTO.getDateDebutExercice());
+            }
+            if (updatedAnneeDTO.getLibele() != null) {
+                annee.setLibele(updatedAnneeDTO.getLibele());
+            }
+            Annee patchedAnnee = anneeRepository.save(annee);
+            return anneeWithoutJourFerieMapper.toAnneeWithoutJourFerieDTO(patchedAnnee);
+        } else {
+            throw new RuntimeException("Annee not found with id: " + id);
+        }
+    }
 }

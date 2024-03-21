@@ -45,6 +45,47 @@ public class Contact {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Impot> impots = new ArrayList<>();
+
+    @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Deduction> deductions = new ArrayList<>();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public void addImpot(ImpotProjectionDTO impotDTO) {
         Impot impot = new Impot();
         impot.setId(impotDTO.getId());

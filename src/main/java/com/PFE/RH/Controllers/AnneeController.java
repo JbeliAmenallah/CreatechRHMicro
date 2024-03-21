@@ -28,6 +28,11 @@ public class AnneeController {
         AnneeWithoutJourFerieDTO annee = anneeService.getAnneeById(id);
         return ResponseEntity.ok(annee);
     }
+    @PatchMapping("/{id}")
+    public ResponseEntity<AnneeWithoutJourFerieDTO> patchAnnee(@PathVariable Long id, @RequestBody AnneeDTO anneeDTO) {
+        AnneeWithoutJourFerieDTO patchedAnnee = anneeService.patchAnnee(id, anneeDTO);
+        return ResponseEntity.ok(patchedAnnee);
+    }
 
     @GetMapping
     public ResponseEntity<List<AnneeWithoutJourFerieDTO>> getAllAnnees() {

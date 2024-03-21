@@ -1,5 +1,6 @@
 package com.PFE.RH.Entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -13,7 +14,7 @@ public class Annee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @JsonFormat(pattern = "dd/MM/yyyy") // Specify the French date format
     private String dateDebutExercice;
     private String libele;
 

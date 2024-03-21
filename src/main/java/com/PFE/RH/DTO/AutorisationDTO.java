@@ -3,6 +3,7 @@ package com.PFE.RH.DTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,10 +15,12 @@ public class AutorisationDTO {
 
     @NotNull(message = "Start date (dateDebut) is required")
     @PastOrPresent(message = "Start date (dateDebut) must be in the past or present")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dateDebut;
 
     @NotNull(message = "End date (dateFin) is required")
     @FutureOrPresent(message = "End date (dateFin) must be in the future or present")
+    @DateTimeFormat(pattern = "dd/MM/yyyy -- HH:mm")
     private LocalDateTime dateFin;
 
     @NotNull(message = "Contact ID is required")

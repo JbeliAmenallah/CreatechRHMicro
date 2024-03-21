@@ -20,6 +20,9 @@ public class ContactDTO {
     private List<CotisationWithHiddenContactIdDTO> cotisations;
     private EntrepriseWithoutContactsDTO entreprise;
     private List<ImpotProjectionDTO> impots;
+    private List<DeductionDTO> deductions; // Added DeductionDTO list
+
+
     // Getters and setters
     // Omitted for brevity
 
@@ -27,4 +30,5 @@ public class ContactDTO {
     public void addImpot(ImpotProjectionDTO impotProjectionDTO) {
         this.impots.add(impotProjectionDTO);
     }
+
 }
