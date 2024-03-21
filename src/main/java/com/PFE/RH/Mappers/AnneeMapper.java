@@ -16,7 +16,7 @@ public interface AnneeMapper {
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "dateDebutExercice", target = "dateDebutExercice"),
             @Mapping(source = "libele", target = "libele"),
-            @Mapping(source = "jourFeries", target = "jourFerieDTOs") // Map jourFeries to jourFerieDTOs
+         @Mapping(source = "jourFeries", target = "jourFerieDTOs") // Map jourFeries to jourFerieDTOs
     })
     AnneeDTO toAnneeDTO(Annee annee);
 
@@ -24,7 +24,7 @@ public interface AnneeMapper {
             @Mapping(source = "anneeDTO.id", target = "id"),
             @Mapping(source = "anneeDTO.dateDebutExercice", target = "dateDebutExercice"),
             @Mapping(source = "anneeDTO.libele", target = "libele"),
-            @Mapping(source = "anneeDTO.jourFerieDTOs", target = "jourFeries") // Map jourFerieDTOs to jourFeries
+          @Mapping(source = "anneeDTO.jourFerieDTOs", target = "jourFeries") // Map jourFerieDTOs to jourFeries
     })
     Annee toAnnee(AnneeDTO anneeDTO);
 }

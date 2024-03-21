@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -47,8 +48,7 @@ public class PrimeService {
             prime.setContact(contact);
             contact.getPrimes().add(prime);
         } else {
-            // Handle case where Contact is not found
-            // You can throw an exception, log a warning, or handle it based on your application's requirements
+            throw new NoSuchElementException("Contact not found with ID: " + primeDTO.getContactId());
         }
 
         // Fetch the TypePrime if typePrimeId is provided
@@ -58,15 +58,13 @@ public class PrimeService {
                 TypePrime typePrime = typePrimeOptional.get();
                 prime.setTypePrime(typePrime);
             } else {
-                // Handle case where TypePrime is not found
-                // You can throw an exception, log a warning, or handle it based on your application's requirements
+                throw new NoSuchElementException("TypePrime not found with ID: " + primeDTO.getTypePrimeId());
             }
         }
 
         Prime savedPrime = primeRepository.save(prime);
         return primeMapper.primeToPrimeDTO(savedPrime);
     }
-
 
     public PrimeDTO getPrimeById(Long id) {
         Optional<Prime> optionalPrime = primeRepository.findById(id);
@@ -81,5 +79,45 @@ public class PrimeService {
             return true;
         }
         return false;
+    }
+
+    public PrimeDTO patchPrime(Long id, PrimeDTO patchedPrimeDTO) {
+        Optional<Prime> optionalPrime = primeRepository.findById(id);
+        if (optionalPrime.isPresent()) {
+            Prime prime = optionalPrime.get();
+
+            if (patchedPrimeDTO.getYear() != 0) {
+                prime.setYear(patchedPrimeDTO.getYear());
+            }
+            if (patchedPrimeDTO.getMonth() != 0) {
+                prime.setMonth(patchedPrimeDTO.getMonth());
+            }
+            if (patchedPrimeDTO.getMontant() != null) {
+                prime.setMontant(patchedPrimeDTO.getMontant());
+            }
+            if (patchedPrimeDTO.getMotif() != null) {
+                prime.setMotif(patchedPrimeDTO.getMotif());
+            }
+            if (patchedPrimeDTO.getTypePrimeId() != null) {
+                Optional<TypePrime> typePrimeOptional = typePrimeRepository.findById(patchedPrimeDTO.getTypePrimeId());
+                if (typePrimeOptional.isPresent()) {
+                    prime.setTypePrime(typePrimeOptional.get());
+                } else {
+                    throw new NoSuchElementException("TypePrime not found with ID: " + patchedPrimeDTO.getTypePrimeId());
+                }
+            }
+
+            Prime updatedPrime = primeRepository.save(prime);
+            return primeMapper.primeToPrimeDTO(updatedPrime);
+        } else {
+            throw new NoSuchElementException("Prime not found with ID: " + id);
+        }
+    }
+
+    public List<PrimeDTO> getPrimesByContactId(Long contactId) {
+        List<Prime> primes = primeRepository.findByContactContactId(contactId);
+        return primes.stream()
+                .map(primeMapper::primeToPrimeDTO)
+                .collect(Collectors.toList());
     }
 }

@@ -36,8 +36,6 @@ public class CongeService {
                 .orElse(null);
     }
 
-
-
     public CongeDTO getCongeById(Long congeId) {
         Optional<Conge> congeOptional = congeRepository.findById(congeId);
         return congeOptional.map(congeMapper::congeToCongeDTO).orElse(null);
@@ -78,5 +76,32 @@ public class CongeService {
             return true;
         }
         return false;
+    }
+
+    public List<CongeDTO> getCongesByContactId(Long contactId) {
+        List<Conge> conges = congeRepository.findByContactContactId(contactId);
+        return conges.stream()
+                .map(congeMapper::congeToCongeDTO)
+                .collect(Collectors.toList());
+    }
+    public CongeDTO patchConge(Long congeId, CongeDTO patchedCongeDTO) {
+        Optional<Conge> congeOptional = congeRepository.findById(congeId);
+        if (congeOptional.isPresent()) {
+            Conge conge = congeOptional.get();
+
+            if (patchedCongeDTO.getStartDate() != null) {
+                conge.setStartDate(patchedCongeDTO.getStartDate());
+            }
+            if (patchedCongeDTO.getEndDate() != null) {
+                conge.setEndDate(patchedCongeDTO.getEndDate());
+            }
+            if (patchedCongeDTO.getState() != null) {
+                conge.setState(patchedCongeDTO.getState());
+            }
+
+            congeRepository.save(conge);
+            return congeMapper.congeToCongeDTO(conge);
+        }
+        return null;
     }
 }

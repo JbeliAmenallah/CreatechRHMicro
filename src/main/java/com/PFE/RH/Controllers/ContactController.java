@@ -18,8 +18,9 @@ public class ContactController {
     private ContactService contactService;
 
     @PostMapping
-    public ContactDTO addContact(@RequestBody ContactDTO contactDTO) {
-        return contactService.saveContact(contactDTO);
+    public ResponseEntity<ContactDTO> addContact(@RequestBody ContactDTO contactDTO) {
+        ContactDTO createdContact = contactService.saveContact(contactDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdContact);
     }
 
     @GetMapping
@@ -45,6 +46,19 @@ public class ContactController {
         try {
             ContactDTO updatedContact = contactService.updateContact(id, updatedContactDTO);
             return ResponseEntity.ok(updatedContact);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ContactDTO> patchContact(
+            @PathVariable Long id,
+            @RequestBody ContactDTO patchedContactDTO
+    ) {
+        try {
+            ContactDTO patchedContact = contactService.patchContact(id, patchedContactDTO);
+            return ResponseEntity.ok(patchedContact);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }

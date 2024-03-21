@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TypePrimeRepository extends JpaRepository<TypePrime, Long> {
+    TypePrime findByLibele(String libele);
+
+    TypePrime findByCode(String code);
 }

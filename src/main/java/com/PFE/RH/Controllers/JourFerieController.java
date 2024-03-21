@@ -28,5 +28,25 @@ public class JourFerieController {
         return new ResponseEntity<>(createdJourFerie, HttpStatus.CREATED);
     }
 
-    // Add other HTTP methods for update, delete, etc. if needed
+    @PutMapping("/{id}")
+    public ResponseEntity<JourFerieDTO> updateJourFerie(@PathVariable Long id, @RequestBody JourFerieDTO jourFerieDTO) {
+        JourFerieDTO updatedJourFerie = jourFerieService.updateJourFerie(id, jourFerieDTO);
+        return ResponseEntity.ok(updatedJourFerie);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<JourFerieDTO> partialUpdateJourFerie(@PathVariable Long id, @RequestBody JourFerieDTO partialJourFerieDTO) {
+        JourFerieDTO updatedJourFerie = jourFerieService.partialUpdateJourFerie(id, partialJourFerieDTO);
+        return ResponseEntity.ok(updatedJourFerie);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteJourFerie(@PathVariable Long id) {
+        boolean deleted = jourFerieService.deleteJourFerie(id);
+        if (deleted) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

@@ -21,11 +21,13 @@ public class CongeController {
         CongeDTO savedConge = congeService.saveConge(congeDTO);
         return new ResponseEntity<>(savedConge, HttpStatus.CREATED);
     }
+
     @GetMapping
     public ResponseEntity<List<CongeDTO>> getAllConges() {
         List<CongeDTO> congeDTOList = congeService.getAllConges();
         return new ResponseEntity<>(congeDTOList, HttpStatus.OK);
     }
+
     @GetMapping("/{congeId}")
     public ResponseEntity<CongeDTO> getConge(@PathVariable Long congeId) {
         CongeDTO congeDTO = congeService.getCongeById(congeId);
@@ -51,6 +53,26 @@ public class CongeController {
         boolean deleted = congeService.deleteConge(congeId);
         if (deleted) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/by-contact/{contactId}")
+    public ResponseEntity<List<CongeDTO>> getCongesByContactId(@PathVariable Long contactId) {
+        List<CongeDTO> congesByContact = congeService.getCongesByContactId(contactId);
+        if (!congesByContact.isEmpty()) {
+            return new ResponseEntity<>(congesByContact, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PatchMapping("/{congeId}")
+    public ResponseEntity<CongeDTO> patchConge(@PathVariable Long congeId, @RequestBody CongeDTO patchedCongeDTO) {
+        CongeDTO patchedConge = congeService.patchConge(congeId, patchedCongeDTO);
+        if (patchedConge != null) {
+            return new ResponseEntity<>(patchedConge, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

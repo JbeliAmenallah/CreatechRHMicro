@@ -40,7 +40,7 @@ public class ContactService {
         Contact contact = contactMapper.contactDTOToContact(contactDTO);
 
         // Get the specific enterprise by ID (e.g., ID 1)
-        Optional<Entreprise> optionalEntreprise = entrepriseRepository.findById(1L);
+        Optional<Entreprise> optionalEntreprise = entrepriseRepository.findById(3L);
 
         if (optionalEntreprise.isPresent()) {
             Entreprise entreprise = optionalEntreprise.get();
@@ -70,6 +70,36 @@ public class ContactService {
             throw new NoSuchElementException("Contact not found with ID: " + id);
         }
     }
+
+    // PATCH method to update specific fields
+    public ContactDTO patchContact(Long id, ContactDTO patchedContactDTO) {
+        Optional<Contact> optionalContact = contactRepository.findById(id);
+        if (optionalContact.isPresent()) {
+            Contact contact = optionalContact.get();
+
+            if (patchedContactDTO.getName() != null) {
+                contact.setName(patchedContactDTO.getName());
+            }
+            if (patchedContactDTO.getUsername() != null) {
+                contact.setUsername(patchedContactDTO.getUsername());
+            }
+            if (patchedContactDTO.getEmail() != null) {
+                contact.setEmail(patchedContactDTO.getEmail());
+            }
+            if (patchedContactDTO.getLocation() != null) {
+                contact.setLocation(patchedContactDTO.getLocation());
+            }
+            if (patchedContactDTO.getPhone() != null) {
+                contact.setPhone(patchedContactDTO.getPhone());
+            }
+
+            Contact patchedContact = contactRepository.save(contact);
+            return contactMapper.contactToContactDTO(patchedContact);
+        } else {
+            throw new NoSuchElementException("Contact not found with ID: " + id);
+        }
+    }
+
     public ContactDTO getContactById(Long id) {
         Optional<Contact> optionalContact = contactRepository.findById(id);
         if (optionalContact.isPresent()) {
@@ -79,6 +109,7 @@ public class ContactService {
             throw new NoSuchElementException("Contact not found with ID: " + id);
         }
     }
+
     public boolean deleteContact(Long id) {
         try {
             contactRepository.deleteById(id);

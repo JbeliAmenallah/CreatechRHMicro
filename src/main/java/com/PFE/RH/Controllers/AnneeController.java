@@ -1,8 +1,7 @@
 package com.PFE.RH.Controllers;
 
 import com.PFE.RH.DTO.AnneeDTO;
-import com.PFE.RH.Entities.Annee;
-import com.PFE.RH.Mappers.AnneeMapper;
+import com.PFE.RH.DTO.AnneeWithoutJourFerieDTO;
 import com.PFE.RH.Services.AnneeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,31 +16,28 @@ public class AnneeController {
 
     @Autowired
     private AnneeService anneeService;
-    @Autowired
-    private AnneeMapper anneeMapper;
-    @GetMapping
-    public ResponseEntity<List<AnneeDTO>> getAllAnnees() {
-        List<AnneeDTO> allAnnees = anneeService.getAllAnnees();
-        return ResponseEntity.ok(allAnnees);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<AnneeDTO> getAnneeById(@PathVariable Long id) {
-        Annee annee = anneeService.getAnneeById(id);
-        AnneeDTO anneeDTO = anneeMapper.toAnneeDTO(annee);
-        return ResponseEntity.ok(anneeDTO);
-    }
-
 
     @PostMapping
-    public ResponseEntity<AnneeDTO> createAnnee(@RequestBody AnneeDTO anneeDTO) {
-        AnneeDTO createdAnnee = anneeService.saveAnnee(anneeDTO);
+    public ResponseEntity<AnneeWithoutJourFerieDTO> createAnnee(@RequestBody AnneeDTO anneeDTO) {
+        AnneeWithoutJourFerieDTO createdAnnee = anneeService.saveAnnee(anneeDTO);
         return new ResponseEntity<>(createdAnnee, HttpStatus.CREATED);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<AnneeWithoutJourFerieDTO> getAnneeById(@PathVariable Long id) {
+        AnneeWithoutJourFerieDTO annee = anneeService.getAnneeById(id);
+        return ResponseEntity.ok(annee);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<AnneeWithoutJourFerieDTO>> getAllAnnees() {
+        List<AnneeWithoutJourFerieDTO> allAnnees = anneeService.getAllAnnees();
+        return ResponseEntity.ok(allAnnees);
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<AnneeDTO> updateAnnee(@PathVariable Long id, @RequestBody AnneeDTO anneeDTO) {
-        AnneeDTO updatedAnnee = anneeService.updateAnnee(id, anneeDTO);
+    public ResponseEntity<AnneeWithoutJourFerieDTO> updateAnnee(@PathVariable Long id, @RequestBody AnneeDTO anneeDTO) {
+        AnneeWithoutJourFerieDTO updatedAnnee = anneeService.updateAnnee(id, anneeDTO);
         return ResponseEntity.ok(updatedAnnee);
     }
 

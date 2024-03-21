@@ -7,5 +7,5 @@ public class ImpotDTO {
     private Long id;
     private String libele;
     private double taux;
-    private AnneeDTO anneeDTO;
+    private AnneeDTO anneeDTO; // Corrected to AnneeDTO
 }

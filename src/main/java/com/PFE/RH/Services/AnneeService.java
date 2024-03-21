@@ -1,8 +1,10 @@
 package com.PFE.RH.Services;
 
 import com.PFE.RH.DTO.AnneeDTO;
+import com.PFE.RH.DTO.AnneeWithoutJourFerieDTO;
 import com.PFE.RH.Entities.Annee;
 import com.PFE.RH.Mappers.AnneeMapper;
+import com.PFE.RH.Mappers.AnneeWithoutJourFerieMapper;
 import com.PFE.RH.Repositories.AnneeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,27 +22,30 @@ public class AnneeService {
     @Autowired
     private AnneeMapper anneeMapper;
 
-    public List<AnneeDTO> getAllAnnees() {
+    @Autowired
+    private AnneeWithoutJourFerieMapper anneeWithoutJourFerieMapper;
+
+    public List<AnneeWithoutJourFerieDTO> getAllAnnees() {
         List<Annee> annees = anneeRepository.findAll();
         return annees.stream()
-                .map(anneeMapper::toAnneeDTO)
+                .map(anneeWithoutJourFerieMapper::toAnneeWithoutJourFerieDTO)
                 .collect(Collectors.toList());
     }
 
-    public AnneeDTO saveAnnee(AnneeDTO anneeDTO) {
+    public AnneeWithoutJourFerieDTO saveAnnee(AnneeDTO anneeDTO) {
         Annee annee = anneeMapper.toAnnee(anneeDTO);
         Annee savedAnnee = anneeRepository.save(annee);
-        return anneeMapper.toAnneeDTO(savedAnnee);
+        return anneeWithoutJourFerieMapper.toAnneeWithoutJourFerieDTO(savedAnnee);
     }
 
-    public AnneeDTO updateAnnee(Long id, AnneeDTO updatedAnneeDTO) {
+    public AnneeWithoutJourFerieDTO updateAnnee(Long id, AnneeDTO updatedAnneeDTO) {
         Optional<Annee> optionalAnnee = anneeRepository.findById(id);
         if (optionalAnnee.isPresent()) {
             Annee annee = optionalAnnee.get();
             annee.setDateDebutExercice(updatedAnneeDTO.getDateDebutExercice());
             annee.setLibele(updatedAnneeDTO.getLibele());
             Annee updatedAnnee = anneeRepository.save(annee);
-            return anneeMapper.toAnneeDTO(updatedAnnee);
+            return anneeWithoutJourFerieMapper.toAnneeWithoutJourFerieDTO(updatedAnnee);
         } else {
             throw new RuntimeException("Annee not found with id: " + id);
         }
@@ -55,8 +60,9 @@ public class AnneeService {
         }
     }
 
-    public Annee getAnneeById(Long id) {
-        return anneeRepository.findById(id)
+    public AnneeWithoutJourFerieDTO getAnneeById(Long id) {
+        Annee annee = anneeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Annee not found with id: " + id));
+        return anneeWithoutJourFerieMapper.toAnneeWithoutJourFerieDTO(annee);
     }
 }

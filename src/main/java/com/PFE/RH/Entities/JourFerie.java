@@ -18,7 +18,7 @@ public class JourFerie {
     private String libele;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "annee_id", nullable = false)
+    @JoinColumn(name = "annee_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Annee annee;
