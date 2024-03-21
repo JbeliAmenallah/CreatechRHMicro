@@ -18,7 +18,7 @@ public class ContactDTO {
     private List<CongeWithHiddenContactIdDTO> conges;
     private List<CotisationWithHiddenContactIdDTO> cotisations;
     private EntrepriseWithoutContactsDTO entreprise;
-
+    //private List<ImpotDTO> impots;
     // Getters and setters
     // Omitted for brevity
 }

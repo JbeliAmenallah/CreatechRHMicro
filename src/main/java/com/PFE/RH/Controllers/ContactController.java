@@ -27,7 +27,12 @@ public class ContactController {
     public List<ContactDTO> getAllContacts() {
         return contactService.getAllContacts();
     }
-
+    //@PostMapping("/{contactId}/impots/{impotId}")
+    /*public ResponseEntity<ContactDTO> addImpotToContact(@PathVariable Long contactId,
+                                                        @PathVariable Long impotId) {
+        ContactDTO updatedContact = contactService.addImpotToContact(contactId, impotId);
+        return ResponseEntity.ok(updatedContact);
+    }*/
     @GetMapping("/{id}")
     public ResponseEntity<ContactDTO> getContactById(@PathVariable Long id) {
         try {

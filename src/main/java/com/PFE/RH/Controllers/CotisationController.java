@@ -25,6 +25,16 @@ public class CotisationController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+    @PatchMapping("/{id}")
+    public ResponseEntity<CotisationDTO> patchCotisation(@PathVariable("id") Long cotisationId,
+                                                         @RequestBody CotisationDTO patchedCotisationDTO) {
+        CotisationDTO updatedCotisation = cotisationService.patchCotisation(cotisationId, patchedCotisationDTO);
+        if (updatedCotisation != null) {
+            return ResponseEntity.ok(updatedCotisation);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<CotisationDTO> getCotisationById(@PathVariable("id") Long cotisationId) {

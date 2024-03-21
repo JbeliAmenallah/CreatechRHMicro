@@ -1,6 +1,5 @@
 package com.PFE.RH.Services;
 
-import com.PFE.RH.DTO.AnneeDTO;
 import com.PFE.RH.DTO.ImpotDTO;
 import com.PFE.RH.Entities.Annee;
 import com.PFE.RH.Entities.Impot;
@@ -36,12 +35,11 @@ public class ImpotService {
     public ImpotDTO saveImpot(ImpotDTO impotDTO) {
         Impot impot = impotMapper.toImpot(impotDTO);
 
-        // Fetch Annee using provided AnneeDTO
-        AnneeDTO anneeDTO = impotDTO.getAnneeDTO();
+        // Fetch Annee using provided AnneeWithoutJourFerieDTO
         Annee annee = null;
-        if (anneeDTO != null && anneeDTO.getId() != null) {
-            annee = anneeRepository.findById(anneeDTO.getId())
-                    .orElseThrow(() -> new RuntimeException("Annee not found with id: " + anneeDTO.getId()));
+        if (impotDTO.getAnneeWithoutJourFerieDTO() != null && impotDTO.getAnneeWithoutJourFerieDTO().getId() != null) {
+            annee = anneeRepository.findById(impotDTO.getAnneeWithoutJourFerieDTO().getId())
+                    .orElseThrow(() -> new RuntimeException("Annee not found with id: " + impotDTO.getAnneeWithoutJourFerieDTO().getId()));
         }
 
         impot.setAnnee(annee);
@@ -57,12 +55,11 @@ public class ImpotService {
         existingImpot.setLibele(updatedImpotDTO.getLibele());
         existingImpot.setTaux(updatedImpotDTO.getTaux());
 
-        // Fetch Annee using provided AnneeDTO
-        AnneeDTO anneeDTO = updatedImpotDTO.getAnneeDTO();
+        // Fetch Annee using provided AnneeWithoutJourFerieDTO
         Annee annee = null;
-        if (anneeDTO != null && anneeDTO.getId() != null) {
-            annee = anneeRepository.findById(anneeDTO.getId())
-                    .orElseThrow(() -> new RuntimeException("Annee not found with id: " + anneeDTO.getId()));
+        if (updatedImpotDTO.getAnneeWithoutJourFerieDTO() != null && updatedImpotDTO.getAnneeWithoutJourFerieDTO().getId() != null) {
+            annee = anneeRepository.findById(updatedImpotDTO.getAnneeWithoutJourFerieDTO().getId())
+                    .orElseThrow(() -> new RuntimeException("Annee not found with id: " + updatedImpotDTO.getAnneeWithoutJourFerieDTO().getId()));
         }
 
         existingImpot.setAnnee(annee);
@@ -79,6 +76,7 @@ public class ImpotService {
             return false;
         }
     }
+
     public ImpotDTO partialUpdateImpot(Long id, ImpotDTO partialImpotDTO) {
         Optional<Impot> optionalImpot = impotRepository.findById(id);
         if (optionalImpot.isPresent()) {
@@ -90,12 +88,12 @@ public class ImpotService {
             if (partialImpotDTO.getTaux() != 0) {
                 impot.setTaux(partialImpotDTO.getTaux());
             }
-            // Fetch Annee using provided AnneeDTO
-            AnneeDTO anneeDTO = partialImpotDTO.getAnneeDTO();
+
+            // Fetch Annee using provided AnneeWithoutJourFerieDTO
             Annee annee = null;
-            if (anneeDTO != null && anneeDTO.getId() != null) {
-                annee = anneeRepository.findById(anneeDTO.getId())
-                        .orElseThrow(() -> new RuntimeException("Annee not found with id: " + anneeDTO.getId()));
+            if (partialImpotDTO.getAnneeWithoutJourFerieDTO() != null && partialImpotDTO.getAnneeWithoutJourFerieDTO().getId() != null) {
+                annee = anneeRepository.findById(partialImpotDTO.getAnneeWithoutJourFerieDTO().getId())
+                        .orElseThrow(() -> new RuntimeException("Annee not found with id: " + partialImpotDTO.getAnneeWithoutJourFerieDTO().getId()));
             }
 
             impot.setAnnee(annee);
@@ -106,6 +104,7 @@ public class ImpotService {
             throw new RuntimeException("Impot not found with id: " + id);
         }
     }
+
     public ImpotDTO getImpotById(Long id) {
         Impot impot = impotRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Impot not found with id: " + id));

@@ -42,6 +42,9 @@ public class Contact {
     @JoinColumn(name = "entreprise_id") // Assuming this is the column name in your Contact table
     private Entreprise entreprise;
 
+   // @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL)
+    //private List<Impot> impots;
+
     // Getters and setters
     // Omitted for brevity
 }

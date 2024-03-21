@@ -1,5 +1,6 @@
 package com.PFE.RH.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Data

@@ -93,4 +93,28 @@ public class CotisationService {
         }
         return false;
     }
+    public CotisationDTO patchCotisation(Long cotisationId, CotisationDTO patchedCotisationDTO) {
+        Optional<Cotisation> cotisationOptional = cotisationRepository.findById(cotisationId);
+        if (cotisationOptional.isPresent()) {
+            Cotisation cotisation = cotisationOptional.get();
+
+            if (patchedCotisationDTO.getLibele() != null) {
+                cotisation.setLibele(patchedCotisationDTO.getLibele());
+            }
+            if (patchedCotisationDTO.getAnnee() != 0) {
+                cotisation.setAnnee(patchedCotisationDTO.getAnnee());
+            }
+            if (patchedCotisationDTO.getTaux() != 0.0) {
+                cotisation.setTaux(patchedCotisationDTO.getTaux());
+            }
+            if (patchedCotisationDTO.getContactId() != null) {
+                Optional<Contact> contactOptional = contactRepository.findById(patchedCotisationDTO.getContactId());
+                contactOptional.ifPresent(cotisation::setContact);
+            }
+
+            Cotisation updatedCotisation = cotisationRepository.save(cotisation);
+            return cotisationMapper.cotisationToCotisationDTO(updatedCotisation);
+        }
+        return null;
+    }
 }

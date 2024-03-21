@@ -1,6 +1,7 @@
 package com.PFE.RH.Mappers;
 
 import com.PFE.RH.DTO.ImpotDTO;
+import com.PFE.RH.DTO.AnneeWithoutJourFerieDTO;
 import com.PFE.RH.Entities.Annee;
 import com.PFE.RH.Entities.Impot;
 import org.mapstruct.Mapper;
@@ -12,15 +13,15 @@ public interface ImpotMapper {
 
     ImpotMapper INSTANCE = Mappers.getMapper(ImpotMapper.class);
 
-    @Mapping(source = "anneeDTO", target = "annee")
-    Impot toImpot(ImpotDTO impotDTO);
-
-    @Mapping(source = "annee", target = "anneeDTO")
+    @Mapping(source = "annee", target = "anneeWithoutJourFerieDTO")
     ImpotDTO toImpotDTO(Impot impot);
 
-    // Corrected method name for mapping AnneeDTO to Annee
+    Impot toImpot(ImpotDTO impotDTO);
+
     Annee toAnnee(ImpotDTO impotDTO);
 
-    // Corrected method name for mapping Annee to AnneeDTO
     ImpotDTO toAnneeDTO(Annee annee);
+
+    // Mapping for AnneeWithoutJourFerieDTO
+    AnneeWithoutJourFerieDTO toAnneeWithoutJourFerieDTO(Annee annee);
 }
