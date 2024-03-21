@@ -15,5 +15,8 @@ public interface EntrepriseWithoutContactsMapper {
     @Mapping(source = "nom", target = "nom")
     @Mapping(source = "matricule", target = "matricule")
     @Mapping(source = "siegesociale", target = "siegesociale")
+    @Mapping(source = "grades", target = "grades")
+    @Mapping(source = "groupes", target = "groupes")
+    @Mapping(source = "categories", target = "categories")
     EntrepriseWithoutContactsDTO entrepriseToEntrepriseWithoutContactsDTO(Entreprise entreprise);
 }

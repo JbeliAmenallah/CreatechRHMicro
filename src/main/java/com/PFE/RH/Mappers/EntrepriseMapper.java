@@ -22,6 +22,9 @@ public interface EntrepriseMapper {
     @Mapping(source = "matricule", target = "matricule")
     @Mapping(source = "siegesociale", target = "siegesociale")
     @Mapping(source = "contacts", target = "contacts", ignore = true)
+    @Mapping(source = "grades", target = "grades")
+    @Mapping(source = "groupes", target = "groupes")
+    @Mapping(source = "categories", target = "categories")
     EntrepriseDTO entrepriseToEntrepriseDTO(Entreprise entreprise);
 
     @Mapping(source = "entrepriseId", target = "entrepriseId")
@@ -29,6 +32,9 @@ public interface EntrepriseMapper {
     @Mapping(source = "matricule", target = "matricule")
     @Mapping(source = "siegesociale", target = "siegesociale")
     @Mapping(source = "contacts", target = "contacts", ignore = true)
+    @Mapping(source = "grades", target = "grades")
+    @Mapping(source = "groupes", target = "groupes")
+    @Mapping(source = "categories", target = "categories")
     Entreprise entrepriseDTOToEntreprise(EntrepriseDTO entrepriseDTO);
 
     default List<ContactDTO> mapContactsToContactDTOs(List<Contact> contacts) {

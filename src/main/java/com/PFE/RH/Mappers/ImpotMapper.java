@@ -24,4 +24,5 @@ public interface ImpotMapper {
 
     // Mapping for AnneeWithoutJourFerieDTO
     AnneeWithoutJourFerieDTO toAnneeWithoutJourFerieDTO(Annee annee);
+
 }

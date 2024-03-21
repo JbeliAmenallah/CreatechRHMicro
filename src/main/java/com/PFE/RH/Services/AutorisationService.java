@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,6 +61,51 @@ public class AutorisationService {
 
     public void deleteAutorisation(Long autorisationId) {
         autorisationRepository.deleteById(autorisationId);
+    }
+
+    public AutorisationDTO patchAutorisation(Long autorisationId, AutorisationDTO updatedAutorisationDTO) {
+        Autorisation autorisation = autorisationRepository.findById(autorisationId)
+                .orElseThrow(() -> new RuntimeException("Autorisation not found with id: " + autorisationId));
+
+        if (updatedAutorisationDTO.getDateDebut() != null) {
+            autorisation.setDateDebut(updatedAutorisationDTO.getDateDebut());
+        }
+
+        if (updatedAutorisationDTO.getDateFin() != null) {
+            autorisation.setDateFin(updatedAutorisationDTO.getDateFin());
+        }
+
+        if (updatedAutorisationDTO.getState() != null) {
+            autorisation.setState(updatedAutorisationDTO.getState());
+        }
+
+        Autorisation patchedAutorisation = autorisationRepository.save(autorisation);
+        return autorisationMapper.autorisationToAutorisationDTO(patchedAutorisation);
+    }
+
+    public List<AutorisationDTO> findByContactId(Long contactId) {
+        List<Autorisation> autorisations = autorisationRepository.findByContact_ContactId(contactId);
+        return autorisations.stream()
+                .map(autorisationMapper::autorisationToAutorisationDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<AutorisationDTO> findAutorisationsWithDurationMoreThanTwoHours() {
+        List<Autorisation> autorisations = autorisationRepository.findAll();
+        return autorisations.stream()
+                .filter(this::hasDurationMoreThanTwoHours)
+                .map(autorisationMapper::autorisationToAutorisationDTO)
+                .collect(Collectors.toList());
+    }
+
+    private boolean hasDurationMoreThanTwoHours(Autorisation autorisation) {
+        LocalDateTime dateDebut = autorisation.getDateDebut();
+        LocalDateTime dateFin = autorisation.getDateFin();
+        if (dateDebut != null && dateFin != null) {
+            Duration duration = Duration.between(dateDebut, dateFin);
+            return duration.toHours() > 2;
+        }
+        return false;
     }
 
     private void validateAutorisationDTO(@Valid @NotNull AutorisationDTO autorisationDTO) {

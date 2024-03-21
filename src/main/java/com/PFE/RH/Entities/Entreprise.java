@@ -20,7 +20,17 @@ public class Entreprise {
 
     @OneToMany(mappedBy = "entreprise", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Contact> contacts = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "entreprise_id")
+    private List<Grade> grades = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "entreprise_id")
+    private List<Groupe> groupes = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "entreprise_id")
+    private List<Category> categories = new ArrayList<>();
     // Getters and setters
     // Omitted for brevity
 }

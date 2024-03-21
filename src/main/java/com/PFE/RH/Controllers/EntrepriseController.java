@@ -22,10 +22,10 @@ public class EntrepriseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EntrepriseWithoutContactsDTO>> getAllEntreprises() {
+   /* public ResponseEntity<List<EntrepriseWithoutContactsDTO>> getAllEntreprises() {
         List<EntrepriseWithoutContactsDTO> entreprises = entrepriseService.getAllEntreprises();
         return new ResponseEntity<>(entreprises, HttpStatus.OK);
-    }
+    }*/
 
     @PostMapping
     public ResponseEntity<EntrepriseDTO> createEntreprise(@RequestBody EntrepriseDTO entrepriseDTO) {
@@ -38,7 +38,23 @@ public class EntrepriseController {
         EntrepriseDTO updatedEntreprise = entrepriseService.updateEntreprise(id, updatedEntrepriseDTO);
         return new ResponseEntity<>(updatedEntreprise, HttpStatus.OK);
     }
+    @PostMapping("/{entrepriseId}/addGrade/{gradeId}")
+    public ResponseEntity<EntrepriseWithoutContactsDTO> addGradeToEntreprise(@PathVariable Long entrepriseId, @PathVariable Long gradeId) {
+        EntrepriseWithoutContactsDTO updatedEntreprise = entrepriseService.addGradeToEntreprise(entrepriseId, gradeId);
+        return new ResponseEntity<>(updatedEntreprise, HttpStatus.OK);
+    }
 
+    @PostMapping("/{entrepriseId}/addGroupe/{groupeId}")
+    public ResponseEntity<EntrepriseWithoutContactsDTO> addGroupeToEntreprise(@PathVariable Long entrepriseId, @PathVariable Long groupeId) {
+        EntrepriseWithoutContactsDTO updatedEntreprise = entrepriseService.addGroupeToEntreprise(entrepriseId, groupeId);
+        return new ResponseEntity<>(updatedEntreprise, HttpStatus.OK);
+    }
+
+    @PostMapping("/{entrepriseId}/addCategory/{categoryId}")
+    public ResponseEntity<EntrepriseWithoutContactsDTO> addCategoryToEntreprise(@PathVariable Long entrepriseId, @PathVariable Long categoryId) {
+        EntrepriseWithoutContactsDTO updatedEntreprise = entrepriseService.addCategoryToEntreprise(entrepriseId, categoryId);
+        return new ResponseEntity<>(updatedEntreprise, HttpStatus.OK);
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteEntreprise(@PathVariable Long id) {
         boolean deleted = entrepriseService.deleteEntreprise(id);

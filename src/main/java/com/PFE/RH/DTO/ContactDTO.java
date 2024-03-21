@@ -1,5 +1,6 @@
 package com.PFE.RH.DTO;
 
+import com.PFE.RH.Entities.Impot;
 import lombok.Data;
 
 import java.util.List;
@@ -18,7 +19,12 @@ public class ContactDTO {
     private List<CongeWithHiddenContactIdDTO> conges;
     private List<CotisationWithHiddenContactIdDTO> cotisations;
     private EntrepriseWithoutContactsDTO entreprise;
-    //private List<ImpotDTO> impots;
+    private List<ImpotProjectionDTO> impots;
     // Getters and setters
     // Omitted for brevity
+
+    // Add method to add ImpotProjectionDTO to impots list
+    public void addImpot(ImpotProjectionDTO impotProjectionDTO) {
+        this.impots.add(impotProjectionDTO);
+    }
 }

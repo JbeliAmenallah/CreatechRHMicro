@@ -1,16 +1,13 @@
 package com.PFE.RH.Mappers;
 
-import com.PFE.RH.DTO.CongeWithHiddenContactIdDTO;
-import com.PFE.RH.Entities.Conge;
-import com.PFE.RH.Entities.Contact;
-import com.PFE.RH.DTO.ContactDTO;
-import com.PFE.RH.DTO.EntrepriseWithoutContactsDTO;
+import com.PFE.RH.DTO.*;
+import com.PFE.RH.Entities.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring", uses = EntrepriseWithoutContactsMapper.class)
+@Mapper(componentModel = "spring", uses = {EntrepriseWithoutContactsMapper.class, ImpotProjectionMapper.class})
 public interface ContactMapper {
 
     ContactMapper INSTANCE = Mappers.getMapper(ContactMapper.class);
@@ -27,6 +24,7 @@ public interface ContactMapper {
     @Mapping(source = "contact.conges", target = "conges")
     @Mapping(source = "contact.cotisations", target = "cotisations")
     @Mapping(source = "contact.entreprise", target = "entreprise")
+    @Mapping(source = "contact.impots", target = "impots")
     ContactDTO contactToContactDTO(Contact contact);
 
     @Mapping(target = "absences", ignore = true)
@@ -35,6 +33,7 @@ public interface ContactMapper {
     @Mapping(target = "conges", ignore = true)
     @Mapping(source = "cotisations", target = "cotisations")
     Contact contactDTOToContact(ContactDTO contactDTO);
+
     @Mappings({
             @Mapping(source = "congeId", target = "congeId"),
             @Mapping(source = "startDate", target = "startDate"),
@@ -42,5 +41,6 @@ public interface ContactMapper {
             @Mapping(source = "state", target = "state"),
     })
     CongeWithHiddenContactIdDTO congeToCongeWithHiddenContactIdDTO(Conge conge);
+
 
 }
