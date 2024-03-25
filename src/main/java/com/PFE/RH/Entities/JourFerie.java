@@ -7,14 +7,13 @@ import lombok.ToString;
 
 @Data
 @Entity
-public class JourFerie {
+public class    JourFerie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private int jour;
     private int mois;
-    private int year;
     private String libele;
 
     @ManyToOne(fetch = FetchType.LAZY)

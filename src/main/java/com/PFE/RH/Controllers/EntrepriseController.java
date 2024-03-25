@@ -3,12 +3,17 @@ package com.PFE.RH.Controllers;
 import com.PFE.RH.DTO.EntrepriseDTO;
 import com.PFE.RH.DTO.EntrepriseWithoutContactsDTO;
 import com.PFE.RH.Services.EntrepriseService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/entreprises")
@@ -28,9 +33,17 @@ public class EntrepriseController {
     }*/
 
     @PostMapping
-    public ResponseEntity<EntrepriseDTO> createEntreprise(@RequestBody EntrepriseDTO entrepriseDTO) {
-        EntrepriseDTO createdEntreprise = entrepriseService.saveEntreprise(entrepriseDTO);
-        return new ResponseEntity<>(createdEntreprise, HttpStatus.CREATED);
+    public ResponseEntity<?> createEntreprise(@Valid @RequestBody EntrepriseDTO entrepriseDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            for (FieldError fieldError : bindingResult.getFieldErrors()) {
+                errors.put(fieldError.getField(), fieldError.getDefaultMessage());
+            }
+            return ResponseEntity.badRequest().body(errors);
+        } else {
+            EntrepriseDTO createdEntreprise = entrepriseService.saveEntreprise(entrepriseDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdEntreprise);
+        }
     }
 
     @PutMapping("/{id}")

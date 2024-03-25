@@ -11,6 +11,7 @@ import com.PFE.RH.Mappers.ImpotProjectionMapper;
 import com.PFE.RH.Repositories.ContactRepository;
 import com.PFE.RH.Repositories.EntrepriseRepository;
 import com.PFE.RH.Repositories.ImpotRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -49,7 +50,7 @@ public class ContactService {
         Contact contact = contactMapper.contactDTOToContact(contactDTO);
 
         // Get the specific enterprise by ID (e.g., ID 1)
-        Optional<Entreprise> optionalEntreprise = entrepriseRepository.findById(3L);
+        Optional<Entreprise> optionalEntreprise = entrepriseRepository.findById(1L);
 
         if (optionalEntreprise.isPresent()) {
             Entreprise entreprise = optionalEntreprise.get();
@@ -81,7 +82,7 @@ public class ContactService {
     }
 
     // PATCH method to update specific fields
-    public ContactDTO patchContact(Long id, ContactDTO patchedContactDTO) {
+    public ContactDTO patchContact(Long id,ContactDTO patchedContactDTO) {
         Optional<Contact> optionalContact = contactRepository.findById(id);
         if (optionalContact.isPresent()) {
             Contact contact = optionalContact.get();
@@ -100,6 +101,36 @@ public class ContactService {
             }
             if (patchedContactDTO.getPhone() != null) {
                 contact.setPhone(patchedContactDTO.getPhone());
+            }
+            if (patchedContactDTO.getFax() != null) {
+                contact.setFax(patchedContactDTO.getFax());
+            }
+            if (patchedContactDTO.getPassword() != null) {
+                contact.setPassword(patchedContactDTO.getPassword());
+            }
+            if (patchedContactDTO.getRoles() != null) {
+                contact.setRoles(patchedContactDTO.getRoles());
+            }
+            if (patchedContactDTO.getNbEnfant() != null) {
+                contact.setNbEnfant(patchedContactDTO.getNbEnfant());
+            }
+            if (patchedContactDTO.getRegime() != null) {
+                contact.setRegime(patchedContactDTO.getRegime());
+            }
+
+                contact.setChefDefamille(patchedContactDTO.isChefDefamille());
+
+            if (patchedContactDTO.getSalaireDeBASE() != null) {
+                contact.setSalaireDeBASE(patchedContactDTO.getSalaireDeBASE());
+            }
+            if (patchedContactDTO.getNumCompte() != null) {
+                contact.setNumCompte(patchedContactDTO.getNumCompte());
+            }
+            if (patchedContactDTO.getModeDePaiement() != null) {
+                contact.setModeDePaiement(patchedContactDTO.getModeDePaiement());
+            }
+            if (patchedContactDTO.getDateRecrutemnt() != null) {
+                contact.setDateRecrutemnt(patchedContactDTO.getDateRecrutemnt());
             }
 
             Contact patchedContact = contactRepository.save(contact);

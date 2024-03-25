@@ -25,6 +25,16 @@ public interface ContactMapper {
     @Mapping(source = "contact.cotisations", target = "cotisations")
     @Mapping(source = "contact.entreprise", target = "entreprise")
     @Mapping(source = "contact.impots", target = "impots")
+    @Mapping(source = "contact.fax", target = "fax") // Mapping for fax
+    @Mapping(source = "contact.password", target = "password") // Mapping for password
+    @Mapping(source = "contact.roles", target = "roles") // Mapping for roles
+    @Mapping(source = "contact.nbEnfant", target = "nbEnfant") // Mapping for nbEnfant
+    @Mapping(source = "contact.regime", target = "regime") // Mapping for regime
+    @Mapping(source = "contact.chefDefamille", target = "chefDefamille") // Mapping for chefDefamille
+    @Mapping(source = "contact.salaireDeBASE", target = "salaireDeBASE") // Mapping for salaireDeBASE
+    @Mapping(source = "contact.numCompte", target = "numCompte") // Mapping for numCompte
+    @Mapping(source = "contact.modeDePaiement", target = "modeDePaiement") // Mapping for modeDePaiement
+    @Mapping(source = "contact.dateRecrutemnt", target = "dateRecrutemnt") // Mapping for dateRecrutemnt
     ContactDTO contactToContactDTO(Contact contact);
 
     @Mapping(target = "absences", ignore = true)
@@ -32,6 +42,16 @@ public interface ContactMapper {
     @Mapping(target = "autorisations", ignore = true)
     @Mapping(target = "conges", ignore = true)
     @Mapping(source = "cotisations", target = "cotisations")
+    @Mapping(source = "fax", target = "fax") // Mapping for fax
+    @Mapping(source = "password", target = "password") // Mapping for password
+    @Mapping(source = "roles", target = "roles") // Mapping for roles
+    @Mapping(source = "nbEnfant", target = "nbEnfant") // Mapping for nbEnfant
+    @Mapping(source = "regime", target = "regime") // Mapping for regime
+    @Mapping(source = "chefDefamille", target = "chefDefamille") // Mapping for chefDefamille
+    @Mapping(source = "salaireDeBASE", target = "salaireDeBASE") // Mapping for salaireDeBASE
+    @Mapping(source = "numCompte", target = "numCompte") // Mapping for numCompte
+    @Mapping(source = "modeDePaiement", target = "modeDePaiement") // Mapping for modeDePaiement
+    @Mapping(source = "dateRecrutemnt", target = "dateRecrutemnt") // Mapping for dateRecrutemnt
     Contact contactDTOToContact(ContactDTO contactDTO);
 
     @Mappings({
@@ -41,6 +61,4 @@ public interface ContactMapper {
             @Mapping(source = "state", target = "state"),
     })
     CongeWithHiddenContactIdDTO congeToCongeWithHiddenContactIdDTO(Conge conge);
-
-
 }

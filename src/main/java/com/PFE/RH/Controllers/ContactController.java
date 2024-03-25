@@ -3,27 +3,50 @@ package com.PFE.RH.Controllers;
 import com.PFE.RH.DTO.ContactDTO;
 import com.PFE.RH.DTO.ImpotDTO;
 import com.PFE.RH.Services.ContactService;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 @RestController
+@Validated
 @RequestMapping("/contacts")
 public class ContactController {
 
     @Autowired
     private ContactService contactService;
-
     @PostMapping
-    public ResponseEntity<ContactDTO> addContact(@RequestBody ContactDTO contactDTO) {
-        ContactDTO createdContact = contactService.saveContact(contactDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdContact);
+    public ResponseEntity<?> addContact(@Valid @RequestBody ContactDTO contactDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            for (FieldError fieldError : bindingResult.getFieldErrors()) {
+                errors.put(fieldError.getField(), fieldError.getDefaultMessage());
+            }
+            return ResponseEntity.badRequest().body(errors);
+        }
+
+        try {
+            ContactDTO createdContact = contactService.saveContact(contactDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdContact);
+        } catch (ConstraintViolationException e) {
+            Map<String, String> errors = new HashMap<>();
+            Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
+            for (ConstraintViolation<?> violation : constraintViolations) {
+                errors.put(violation.getPropertyPath().toString(), violation.getMessage());
+            }
+            return ResponseEntity.badRequest().body(errors);
+        }
     }
+
+    //
 
     @GetMapping
     public List<ContactDTO> getAllContacts() {

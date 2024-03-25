@@ -15,7 +15,7 @@ public class AutorisationDTO {
 
     @NotNull(message = "Start date (dateDebut) is required")
     @PastOrPresent(message = "Start date (dateDebut) must be in the past or present")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @DateTimeFormat(pattern = "dd/MM/yyyy -- HH:mm")
     private LocalDateTime dateDebut;
 
     @NotNull(message = "End date (dateFin) is required")

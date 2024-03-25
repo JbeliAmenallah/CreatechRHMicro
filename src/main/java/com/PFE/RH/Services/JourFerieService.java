@@ -46,7 +46,6 @@ public class JourFerieService {
             JourFerie jourFerie = optionalJourFerie.get();
             jourFerie.setJour(updatedJourFerieDTO.getJour());
             jourFerie.setMois(updatedJourFerieDTO.getMois());
-            jourFerie.setYear(updatedJourFerieDTO.getYear());
             jourFerie.setLibele(updatedJourFerieDTO.getLibele());
             jourFerie.setAnnee(mapAnneeWithoutJourFerieDTO(updatedJourFerieDTO.getAnneeId()));
             // You may need to update other fields as needed
@@ -68,9 +67,7 @@ public class JourFerieService {
             if (partialJourFerieDTO.getMois() != 0) {
                 jourFerie.setMois(partialJourFerieDTO.getMois());
             }
-            if (partialJourFerieDTO.getYear() != 0) {
-                jourFerie.setYear(partialJourFerieDTO.getYear());
-            }
+
             if (partialJourFerieDTO.getLibele() != null) {
                 jourFerie.setLibele(partialJourFerieDTO.getLibele());
             }

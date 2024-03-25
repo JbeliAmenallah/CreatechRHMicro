@@ -16,7 +16,6 @@ public interface JourFerieWithoutAnneeMapper {
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "jour", target = "jour"),
             @Mapping(source = "mois", target = "mois"),
-            @Mapping(source = "year", target = "year"),
             @Mapping(source = "libele", target = "libele")
     })
     JourFerie toJourFerie(JourFerieWithoutAnneeDTO jourFerieDTO);
@@ -25,7 +24,6 @@ public interface JourFerieWithoutAnneeMapper {
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "jour", target = "jour"),
             @Mapping(source = "mois", target = "mois"),
-            @Mapping(source = "year", target = "year"),
             @Mapping(source = "libele", target = "libele")
     })
     JourFerieWithoutAnneeDTO toJourFerieDTO(JourFerie jourFerie);
