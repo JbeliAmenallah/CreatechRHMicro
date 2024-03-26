@@ -139,7 +139,7 @@ public class ContactService {
             throw new NoSuchElementException("Contact not found with ID: " + id);
         }
     }
-    public ContactDTO addImpotToContact(Long contactId, Long impotId) {
+ /*   public ContactDTO addImpotToContact(Long contactId, Long impotId) {
         Optional<Contact> optionalContact = contactRepository.findById(contactId);
         Optional<Impot> optionalImpot = impotRepository.findById(impotId);
 
@@ -155,7 +155,7 @@ public class ContactService {
         } else {
             throw new NoSuchElementException("Contact or Impot not found");
         }
-    }
+    }*/
     public ContactDTO getContactById(Long id) {
         Optional<Contact> optionalContact = contactRepository.findById(id);
         if (optionalContact.isPresent()) {

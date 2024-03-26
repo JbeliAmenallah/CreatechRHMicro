@@ -22,6 +22,9 @@ public class FicheDePaieService {
         this.ficheDePaieRepository = ficheDePaieRepository;
         this.ficheDePaieMapper = ficheDePaieMapper;
     }
+    public void persist(FicheDePaie ficheDePaie) {
+        ficheDePaieRepository.save(ficheDePaie);
+    }
     public List<FicheDePaieDTO> getFicheDePaieByContactId(Long contactId) {
         List<FicheDePaie> ficheDePaies = ficheDePaieRepository.findByContactContactId(contactId);
         // Map ficheDePaies to DTOs and return

@@ -24,7 +24,6 @@ public interface ContactMapper {
     @Mapping(source = "contact.conges", target = "conges")
     @Mapping(source = "contact.cotisations", target = "cotisations")
     @Mapping(source = "contact.entreprise", target = "entreprise")
-    @Mapping(source = "contact.impots", target = "impots")
     @Mapping(source = "contact.fax", target = "fax") // Mapping for fax
     @Mapping(source = "contact.password", target = "password") // Mapping for password
     @Mapping(source = "contact.roles", target = "roles") // Mapping for roles

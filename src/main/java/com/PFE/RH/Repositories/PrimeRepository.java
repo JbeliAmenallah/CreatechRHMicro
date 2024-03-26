@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface PrimeRepository extends JpaRepository<Prime, Long> {
     List<Prime> findByContactContactId(Long contactId);
+    List<Prime> findByContactContactIdAndYear(Long contactId, int year);
 }

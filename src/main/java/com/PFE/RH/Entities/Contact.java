@@ -60,20 +60,9 @@ public class Contact {
     @JoinColumn(name = "entreprise_id") // Assuming this is the column name in your Contact table
     private Entreprise entreprise;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Impot> impots = new ArrayList<>();
-
     @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Deduction> deductions = new ArrayList<>();
 
-    public void addImpot(ImpotProjectionDTO impotDTO) {
-        Impot impot = new Impot();
-        impot.setId(impotDTO.getId());
-        impot.setLibele(impotDTO.getLibele());
-        impot.setTaux(impotDTO.getTaux());
-        // Set any other fields from ImpotProjectionDTO if needed
-        impots.add(impot);
-    }
 
     // Getters and setters
     // Omitted for brevity
