@@ -20,6 +20,9 @@ public class FinanceConfiguration {
 
     @Column(name = "taux")
     private double taux;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "annee_id") // Foreign key column
+    private Annee annee;
 
     // Getters and setters
     // Omitted for brevity
